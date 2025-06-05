@@ -4,11 +4,11 @@ use ieee.numeric_std.all;
 
 entity top is port
 (
-   	dequeue   : in std_logic := '0';
-	enqueue   : in std_logic := '0';
+   	dequeue : in std_logic := '0';
+	enqueue : in std_logic := '0';
 	rst     : in std_logic := '0';
-	bit_in    : in std_logic;
-	clk_tb	  : in std_logic
+	bit_in  : in std_logic;
+	clk_tb  : in std_logic
 );
 end entity;
 
@@ -54,7 +54,7 @@ begin
 	enqueue_in => enqueue,      -- sinal para enqueue
 	data_in =>  f_data_in,      -- entrada da fila
 	clk_10kHz => f_clk,         -- 100ms
-	rst => rst                -- rst
+	rst => rst                  -- rst
       );
 
    Clk_Divider: entity work.clock_divider port map
@@ -75,7 +75,7 @@ begin
 	  d_full <= '0';
        end if;
 
-       if d_status_out = '0' then
+       if d_status_out = '1' then
 	  t_data_in <= bit_in;
 	  d_write_in <= '1';
        elsif d_data_ready = '1' then

@@ -31,144 +31,145 @@ begin
 
   teste : process
    begin
+
 ---------byte 1-----------
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
    
     enqueue <= '1';
-    wait for 1 us;
+    wait for 10 us;
    
     enqueue <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
 ---------------------------
 ---------byte 2------------
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
    
     enqueue <= '1';
-    wait for 1 us;
+    wait for 10 us;
    
     enqueue <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
 ---------------------------
 ---------byte 3------------
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
    
     enqueue <= '1';
-    wait for 1 us;
+    wait for 10 us;
    
     enqueue <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
     bit_in <= '1';
-    wait for 1 us;
+    wait for 10 us;
 
    
     enqueue <= '1';
-    wait for 1 us;
+    wait for 10 us;
    
     enqueue <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
 ---------------------------
 
    dequeue <= '1'; --
-    wait for 1 us;
+    wait for 10 us;
    
     dequeue <= '0';
-     wait for 1 us;
+     wait for 10 us;
 
    dequeue <= '1'; --
-    wait for 1 us;
+    wait for 10 us;
    
     dequeue <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
    dequeue <= '1'; --
-    wait for 1 us;
+    wait for 10 us;
    
     dequeue <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
    dequeue <= '1'; --
-    wait for 1 us;
+    wait for 10 us;
    
     dequeue <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
     rst <= '1';
-    wait for 1 us;
+    wait for 10 us;
    
     rst <= '0';
-    wait for 1 us;
+    wait for 10 us;
 
  end process;
 end architecture;

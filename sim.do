@@ -28,5 +28,3 @@ do wave.do
 
 # Optionally quit after simulation finishes
 # quit -f
-
-run 10000 ms

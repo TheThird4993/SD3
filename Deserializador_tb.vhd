@@ -31,7 +31,7 @@ begin
         ack_in => d_ack_in,         -- se a fila recebeu
         write_in => d_write_in,	    -- sinaliza que o top ta "escrevendo"(?)
         data_in => d_data_in,       -- entrada 1bit
-        clk_100kHz => clk,          -- 10ms
+        clk_100kHz => clk,          -- 10us
         rst => rst                  -- rst
       );
 

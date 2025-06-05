@@ -6,7 +6,7 @@ entity deserializador is port
 (  
     status_out  : out std_logic := '0';
     data_out    : out std_logic_vector(7 downto 0);
-    data_ready  : out std_logic := '0';
+    data_ready  : out std_logic := '0';   -- out
     ack_in 	: in  std_logic := '0';  -- a cada byte que recebe
     write_in    : in  std_logic := '1'; -- sinaliza que o top ta escrevendo(?)
     data_in     : in  std_logic;

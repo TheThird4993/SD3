@@ -106,14 +106,12 @@ begin
 	--rst <= '1';
 	--wait for 20 ms;
 
-	d_data_ready <= '0';	
-	wait for 10 ms;
 
 	d_ack_in <= '1';
-	wait for 10 ms;
+	wait for 20 ms;
 	
 	d_ack_in <= '0';
-	wait for 10 ms;
+	wait for 20 ms;
 
 	d_write_in <= '1';
 	d_data_in <= '0';

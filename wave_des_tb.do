@@ -6,7 +6,7 @@ add wave -noupdate /des_tb/d_ack_in
 add wave -noupdate /des_tb/d_write_in
 add wave -noupdate /des_tb/d_status_out
 add wave -noupdate /des_tb/d_data_ready
-add wave -noupdate /des_tb/clk_100kHz
+add wave -noupdate /des_tb/clk
 add wave -noupdate /des_tb/rst
 add wave -noupdate -divider deserializador
 add wave -noupdate /des_tb/Deserializador/status_out

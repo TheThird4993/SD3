@@ -19,7 +19,7 @@ begin
        begin
            while true loop
                clk <= not clk;
-               wait for 10 ms;
+               wait for 5 ms;
            end loop;
        end process;
 
@@ -31,118 +31,118 @@ begin
         ack_in => d_ack_in,         -- se a fila recebeu
         write_in => d_write_in,	    -- sinaliza que o top ta "escrevendo"(?)
         data_in => d_data_in,       -- entrada 1bit
-        clk_100kHz => clk,   -- 10ms
+        clk_100kHz => clk,          -- 10ms
         rst => rst                  -- rst
       );
 
   teste : process
    begin
-
+------------ byte 1----------------- "11010100"
 	d_write_in <= '1';
 	d_data_in <= '1';
-	wait for 20 ms;
-	
-	d_write_in <= '1';
-	d_data_in <= '1';
-	wait for 20 ms;
-
-	d_write_in <= '1';
-	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '1';
 	d_data_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
 
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '1';
 	d_data_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
 
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
+	
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
+
+	d_write_in <= '1';
+	d_data_in <= '0';
+	wait for 10 ms;
 	
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
+
+------------ byte invalido -------- "0001100"
+	d_write_in <= '0';
+	d_data_in <= '0';
+	wait for 10 ms;
 	
+	d_write_in <= '0';
+	d_data_in <= '0';
+	wait for 10 ms;
 
 	d_write_in <= '0';
 	d_data_in <= '0';
-	wait for 20 ms;
-	
-	d_write_in <= '0';
-	d_data_in <= '0';
-	wait for 20 ms;
-
-	d_write_in <= '0';
-	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '0';
 	d_data_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
 
 	d_write_in <= '0';
 	d_data_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '0';
 	d_data_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
 
 	d_write_in <= '0';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '0';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 
 	--rst <= '1';
-	--wait for 20 ms;
+	--wait for 10 ms;
 
-
+-------------ack------------------
 	d_ack_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_ack_in <= '0';
-	wait for 20 ms;
-
+	wait for 10 ms;
+------------ byte 2----------------- "00011100"
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
-	
-	d_write_in <= '1';
-	d_data_in <= '1';
-	wait for 20 ms;
-
-	d_write_in <= '1';
-	d_data_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '1';
 	d_data_in <= '1';
-	wait for 20 ms;
+	wait for 10 ms;
+
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
+	
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
 
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
 	
 	d_write_in <= '1';
 	d_data_in <= '0';
-	wait for 20 ms;
+	wait for 10 ms;
   end process;
 end architecture;

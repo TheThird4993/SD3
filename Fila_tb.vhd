@@ -18,7 +18,7 @@ begin
        begin
            while true loop
                clk <= not clk;
-               wait for 100 ms;
+               wait for 50 ms;
            end loop;
        end process;
 
@@ -34,7 +34,8 @@ begin
       );
   teste : process
   begin
-	
+	wait for 100 ms;
+
 	enqueue <= '1';
 	f_data_in <= "01110010"; -- byte 1 <-
 	wait for 100 ms;
@@ -75,8 +76,8 @@ begin
 	f_data_in <= "11111111"; -- byte 10
 	wait for 100 ms;
 
-	--enqueue <= '0';
-	--dequeue <= '1';
-	--wait for 1000 ms;
+	enqueue <= '0';
+	dequeue <= '1';
+	wait for 1000 ms;
   end process;
 end architecture;

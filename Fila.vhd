@@ -63,6 +63,7 @@ begin
              for i in 0 to 6 loop
     	       vetores(i) <= vetores(i+1);
              end loop;
+	       vetores(7) <= "00000000";
 	  end if;
 	end if;
 	dequeue <= dequeue_in;

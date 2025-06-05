@@ -8,10 +8,14 @@ vlib work
 vmap work work
 
 # Compile all VHDL files
-vcom -work work -2008 -explicit Fila.vhd
+#vcom -work work -2008 -explicit Fila.vhd
 vcom -work work -2008 -explicit Deserializador.vhd
-vcom -work work -2008 -explicit Top.vhd
-vcom -work work -2008 -explicit tb.vhd
+#vcom -work work -2008 -explicit Top.vhd
+#vcom -work work -2008 -explicit tb.vhd
+
+vcom -work work -2008 -explicit Deserializador_tb.vhd
+#vcom -work work -2008 -explicit Fila_tb.vhd
+
 # Load the testbench
 vsim work.tb
 

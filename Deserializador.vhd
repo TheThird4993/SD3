@@ -36,12 +36,11 @@ begin
 	     status_out <= '1';
 	end if;
 
-	if (d_counter /= 7) and (write_in = '1') then
+	if (d_counter /= 8) and (write_in = '1') then
 	     status_out <= '1';
-	     data_temp(0) <= data_temp(0) or data_in;
-	     data_temp <= shift_left(data_temp, 1);
+	     data_temp <= data_temp(6 downto 0) & data_in;
 	     d_counter := d_counter + 1;
-	elsif (d_counter = 7) then
+	elsif (d_counter = 8) then
 	     data_ready <= '1';
 	     data_out <= std_logic_vector(data_temp);
 	     status_out <= '0';

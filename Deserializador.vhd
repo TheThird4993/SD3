@@ -11,7 +11,8 @@ entity deserializador is port
     write_in    : in  std_logic := '1'; -- sinaliza que o top ta escrevendo(?)
     data_in     : in  std_logic;
     clk_100kHz  : in  std_logic;
-    rst 	: in  std_logic := '0'
+    rst 	: in  std_logic := '0';
+    full	: in  std_logic := '0'
 );
 end entity;
 
@@ -29,6 +30,7 @@ begin
 	     status_out <= '0';
      end if;	
       if rising_edge(clk_100khz) then
+       if full /= '1' then
 	if (ack_in = '1') then
 	     data_temp <= "00000000";
 	     data_ready <= '0';
@@ -45,7 +47,7 @@ begin
 	     data_out <= std_logic_vector(data_temp);
 	     status_out <= '0';
 	end if;
-
+      end if;
      end if;
     end process;
 end architecture;

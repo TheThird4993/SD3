@@ -23,6 +23,7 @@ architecture Queue of queue is
   signal vetores  : vetor_de_vetores(0 to 7);
 begin
     process(clk_10khz, rst)
+	variable init : integer := 1;
     begin
      if rst = '1' then
 	dequeue <= '0';
@@ -34,9 +35,16 @@ begin
           end loop;
      end if;	
 
+     if init = 1 then
+	init := 0;
+	for i in 0 to 7 loop
+    	     vetores(i) <= "00000000";
+          end loop;
+     end if;
+
       if rising_edge(clk_10khz) then
 	if enqueue_in = '1' and is_full = '0' then
-	  if len_out = "0111" then
+	  if len_out = "1000" then
 	     is_full <= '1';
 	  else
 	     is_empty <= '0'; 
@@ -45,7 +53,7 @@ begin
 	  end if;
 
 	elsif dequeue = '1' and is_empty = '0' then
-	  if len_out = "0001" then
+	  if len_out = "0000" then
 	     is_empty <= '1';
 	  else
 	     is_full <= '0';

@@ -25,6 +25,7 @@ architecture Top of top is
 	signal d_write_in   : std_logic := '0';
 	signal d_status_out : std_logic := '0';
 	signal d_data_ready : std_logic;
+	signal d_full	    : std_logic;
 	
 	signal lixo         : std_logic_vector(7 downto 0);
 	signal temp	    : std_logic_vector(7 downto 0);
@@ -41,7 +42,8 @@ begin
         write_in => d_write_in,	    -- sinaliza que o top ta "escrevendo"(?)
         data_in => t_data_in,       -- entrada 1bit
         clk_100kHz => d_clk,        -- 10ms
-        rst => t_rst                -- rst
+        rst => t_rst,                -- rst
+	full => d_full
       );
 
    Fila: entity work.queue port map
@@ -75,8 +77,13 @@ begin
     begin
      if(rising_edge(clk_tb)) then
 -------- parte do deserializador -------------------
+       if f_len_out = "1000" then
+	  d_full <= '1';
+       else
+	  d_full <= '0';
+       end if;
 
-       if d_status_out = '1' then
+       if d_status_out = '0' then
 	  t_data_in <= bit_in;
 	  d_write_in <= '1';
        elsif d_data_ready = '1' then

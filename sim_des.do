@@ -16,14 +16,14 @@ vcom -work work -2008 -explicit Deserializador_tb.vhd
 vcom -work work -2008 -explicit Fila_tb.vhd
 
 # Load the testbench
-vsim work.tb
+vsim work.des_tb
 
 # Set warnings off quietly
 quietly set StdArithNoWarnings 1
 quietly set StdVitalGlitchNoWarnings 1
 
 # Load waveform config if you have one, optional
-do wave.do
+do wave_des_tb.do
 
 # Optionally quit after simulation finishes
 # quit -f

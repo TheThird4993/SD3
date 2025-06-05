@@ -6,7 +6,7 @@ entity top is port
 (
    	dequeue   : in std_logic := '0';
 	enqueue   : in std_logic := '0';
-	t_rst     : in std_logic := '0';
+	rst     : in std_logic := '0';
 	bit_in    : in std_logic;
 	clk_tb	  : in std_logic
 );
@@ -42,7 +42,7 @@ begin
         write_in => d_write_in,	    -- sinaliza que o top ta "escrevendo"(?)
         data_in => t_data_in,       -- entrada 1bit
         clk_100kHz => d_clk,        -- 10ms
-        rst => t_rst,                -- rst
+        rst => rst,                -- rst
 	full => d_full
       );
 
@@ -54,24 +54,16 @@ begin
 	enqueue_in => enqueue,      -- sinal para enqueue
 	data_in =>  f_data_in,      -- entrada da fila
 	clk_10kHz => f_clk,         -- 100ms
-	rst => t_rst                -- rst
+	rst => rst                -- rst
       );
 
-   clk_100Khz : process
-       begin
-           while true loop
-               d_clk <= not d_clk;
-               wait for 10 ms;
-           end loop;
-       end process;
-
-   clk_10Khz : process
-       begin
-           while true loop
-               f_clk <= not f_clk;
-               wait for 100 ms;
-           end loop;
-       end process;
+   Clk_Divider: entity work.clock_divider port map
+      (
+	clk_in => clk_tb,
+	rst => rst,
+	clk_100khz => d_clk,
+	clk_10khz => f_clk
+      );
 
   teste: process(clk_tb)
     begin

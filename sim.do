@@ -8,6 +8,7 @@ vlib work
 vmap work work
 
 # Compile all VHDL files
+vcom -work work -2008 -explicit clk_divider.vhd
 vcom -work work -2008 -explicit Fila.vhd
 vcom -work work -2008 -explicit Deserializador.vhd
 vcom -work work -2008 -explicit Top.vhd
@@ -27,3 +28,5 @@ do wave.do
 
 # Optionally quit after simulation finishes
 # quit -f
+
+run 10000 ms

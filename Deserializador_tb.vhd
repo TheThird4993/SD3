@@ -14,6 +14,7 @@ architecture Des_Tb of des_tb is
 	signal d_data_ready : std_logic;		    --
 	signal clk          : std_logic := '0';	            --
 	signal rst	    : std_logic := '0';
+	signal is_full      : std_logic := '0';
 begin
   clk_process : process
        begin
@@ -32,7 +33,8 @@ begin
         write_in => d_write_in,	    -- sinaliza que o top ta "escrevendo"(?)
         data_in => d_data_in,       -- entrada 1bit
         clk_100kHz => clk,          -- 10us
-        rst => rst                  -- rst
+        rst => rst,                 -- rst
+        full => is_full
       );
 
   teste : process
@@ -107,11 +109,21 @@ begin
 	--wait for 10 ms;
 
 -------------ack------------------
+
 	d_ack_in <= '1';
 	wait for 10 ms;
 	
 	d_ack_in <= '0';
 	wait for 10 ms;
+
+------------is full---------------
+
+	is_full <= '1';
+	wait for 10 ms;
+	
+	is_full <= '0';
+	wait for 10 ms;
+
 ------------ byte 2----------------- "00011100"
 	d_write_in <= '1';
 	d_data_in <= '0';
@@ -123,6 +135,39 @@ begin
 
 	d_write_in <= '1';
 	d_data_in <= '0';
+	wait for 10 ms;
+	
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
+
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
+	
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
+
+	d_write_in <= '1';
+	d_data_in <= '0';
+	wait for 10 ms;
+	
+	d_write_in <= '1';
+	d_data_in <= '0';
+	wait for 10 ms;
+
+------------ byte 3----------------- "11111100"
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
+	
+	d_write_in <= '1';
+	d_data_in <= '1';
+	wait for 10 ms;
+
+	d_write_in <= '1';
+	d_data_in <= '1';
 	wait for 10 ms;
 	
 	d_write_in <= '1';

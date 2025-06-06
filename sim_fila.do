@@ -28,3 +28,5 @@ do wave_fila_tb.do
 
 # Optionally quit after simulation finishes
 # quit -f
+
+run 2000 ms

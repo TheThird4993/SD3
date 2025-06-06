@@ -10,7 +10,8 @@ entity queue is port
     enqueue_in  : in  std_logic := '1';
     data_in     : in  std_logic_vector(7 downto 0);
     clk_10kHz   : in  std_logic;
-    rst 	: in  std_logic := '0'
+    rst 	: in  std_logic := '0';
+    full        : out std_logic := '0'
 );
 end entity;
 
@@ -67,6 +68,7 @@ begin
 	  end if;
 	end if;
 	dequeue <= dequeue_in;
+	full <= is_full;
      end if;
     end process;
 end architecture;

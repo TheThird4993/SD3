@@ -24,7 +24,9 @@ quietly set StdArithNoWarnings 1
 quietly set StdVitalGlitchNoWarnings 1
 
 # Load waveform config if you have one, optional
-do wave2.do
+do wave.do
 
 # Optionally quit after simulation finishes
 # quit -f
+
+run 1000 us

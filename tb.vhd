@@ -6,8 +6,8 @@ entity tb is
 end entity;
 
 architecture Tb of tb is
-	signal dequeue  : std_logic := '0';
 	signal enqueue  : std_logic := '0';
+	signal dequeue  : std_logic := '0';
 	signal rst    : std_logic := '0';
 	signal bit_in   : std_logic;
 	signal clk_tb   : std_logic := '0';
@@ -16,14 +16,14 @@ begin
     begin
      while true loop
         clk_tb <= not clk_tb;
-        wait for 0.5 us; -- meio período de 1 MHz
+        wait for 0.5 us; -- meio periodo de 1 MHz
      end loop;
   end process;
 
   Top : entity work.top port map
       (
-	dequeue => dequeue,
 	enqueue => enqueue,
+	dequeue => dequeue,
 	rst => rst,
 	bit_in => bit_in,
 	clk_tb => clk_tb
@@ -31,6 +31,9 @@ begin
 
   teste : process
    begin
+
+    enqueue <= '1';
+    wait for 10 us;
 
 ---------byte 1-----------
     bit_in <= '1';
@@ -55,13 +58,6 @@ begin
     wait for 10 us;
 
     bit_in <= '1';
-    wait for 10 us;
-
-   
-    enqueue <= '1';
-    wait for 10 us;
-   
-    enqueue <= '0';
     wait for 10 us;
 
 ---------------------------
@@ -91,12 +87,6 @@ begin
     bit_in <= '0';
     wait for 10 us;
 
-   
-    enqueue <= '1';
-    wait for 10 us;
-   
-    enqueue <= '0';
-    wait for 10 us;
 
 ---------------------------
 ---------byte 3------------
@@ -113,13 +103,6 @@ begin
     bit_in <= '1';
     wait for 10 us;
 
-   
-    enqueue <= '1';
-    wait for 10 us;
-   
-    enqueue <= '0';
-    wait for 10 us;
-
     bit_in <= '0';
     wait for 10 us;
 
@@ -132,35 +115,13 @@ begin
     bit_in <= '1';
     wait for 10 us;
 
-   
-    enqueue <= '1';
-    wait for 10 us;
-   
+---------------------------
+
     enqueue <= '0';
     wait for 10 us;
 
----------------------------
-
-   dequeue <= '1'; --
-    wait for 10 us;
-   
-    dequeue <= '0';
-     wait for 10 us;
-
-   dequeue <= '1'; --
-    wait for 10 us;
-   
-    dequeue <= '0';
-    wait for 10 us;
-
-   dequeue <= '1'; --
-    wait for 10 us;
-   
-    dequeue <= '0';
-    wait for 10 us;
-
-   dequeue <= '1'; --
-    wait for 10 us;
+    dequeue <= '1'; --
+    wait for 40 us;
    
     dequeue <= '0';
     wait for 10 us;

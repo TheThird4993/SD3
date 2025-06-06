@@ -2,96 +2,91 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity top is port
-(
-   	dequeue : in std_logic := '0';
-	enqueue : in std_logic := '0';
-	rst     : in std_logic := '0';
-	bit_in  : in std_logic;
-	clk_tb  : in std_logic
-);
+entity Top is
+    port (
+        rst      : in  std_logic := '0';
+        bit_in   : in  std_logic;
+        dequeue  : in  std_logic := '0';
+        clk_tb   : in  std_logic;
+	enqueue  : in  std_logic := '0'
+    );
 end entity;
 
-architecture Top of top is
-	signal f_data_out   : std_logic_vector(7 downto 0);
-	signal f_data_in    : std_logic_vector(7 downto 0);
-	signal f_clk	    : std_logic := '0';
-	signal f_len_out    : std_logic_vector(3 downto 0);
+architecture rtl of Top is
+    -- Clocks dos domínios
+    signal clk_100khz : std_logic := '0';
+    signal clk_10khz  : std_logic := '0';
 
-	signal d_data_out   : std_logic_vector(7 downto 0);
-	signal d_data_in    : std_logic; 
-	signal d_ack_in     : std_logic := '0';
-	signal d_clk	    : std_logic := '0';
-	signal d_write_in   : std_logic := '0';
-	signal d_status_out : std_logic := '0';
-	signal d_data_ready : std_logic;
-	signal d_full	    : std_logic;
-	
-	signal lixo         : std_logic_vector(7 downto 0);
-	signal temp	    : std_logic_vector(7 downto 0);
+    -- Sinais entre deserializador e fila
+    signal des_data_out    : std_logic_vector(7 downto 0);
+    signal des_data_ready  : std_logic := '0';
+    signal des_ack         : std_logic := '0';
+    signal des_status      : std_logic := '0';
+    signal des_full        : std_logic := '0';
 
-	signal t_data_in    : std_logic;
-	
+    signal fila_data_in    : std_logic_vector(7 downto 0);
+    signal fila_data_out   : std_logic_vector(7 downto 0);
+    signal fila_len_out    : std_logic_vector(3 downto 0);
+    signal fila_full       : std_logic;
+
+    -- Controle handshake
+    signal enqueue_pulse   : std_logic := '0';
+    signal ack_pulse       : std_logic := '0';
+
 begin
-   Deserializador: entity work.deserializador port map
-      (
-	status_out => d_status_out, -- se pode receber bits
-        data_out => d_data_out,     -- saida 8bits
-        data_ready => d_data_ready, -- se o pacote esta pronto
-        ack_in => d_ack_in,         -- se a fila recebeu
-        write_in => d_write_in,	    -- sinaliza que o top ta "escrevendo"(?)
-        data_in => t_data_in,       -- entrada 1bit
-        clk_100kHz => d_clk,        -- 10ms
-        rst => rst,                -- rst
-	full => d_full
-      );
 
-   Fila: entity work.queue port map
-      (
-	data_out => f_data_out,     -- saida da fila
-	len_out => f_len_out,       -- quantidade de elementos
-	dequeue_in => dequeue,      -- sinal para dequeue
-	enqueue_in => enqueue,      -- sinal para enqueue
-	data_in =>  f_data_in,      -- entrada da fila
-	clk_10kHz => f_clk,         -- 100ms
-	rst => rst                  -- rst
-      );
+    -- Instancia divisor de clock
+    clkdiv: entity work.clock_divider
+        port map (
+            clk_in      => clk_tb,
+            rst         => rst,
+            clk_100khz  => clk_100khz,
+            clk_10khz   => clk_10khz
+        );
 
-   Clk_Divider: entity work.clock_divider port map
-      (
-	clk_in => clk_tb,
-	rst => rst,
-	clk_100khz => d_clk,
-	clk_10khz => f_clk
-      );
+    -- Instancia deserializador
+    des: entity work.deserializador
+        port map (
+            status_out  => des_status,
+            data_out    => des_data_out,
+            data_ready  => des_data_ready,
+            ack_in      => des_ack,
+            write_in    => '1',           -- sempre pronto para receber bits
+            data_in     => bit_in,
+            clk_100kHz  => clk_100khz,
+            rst         => rst,
+            full        => fila_full
+        );
 
-  teste: process(clk_tb)
+    -- Instancia fila
+    queue_inst: entity work.queue
+        port map (
+            data_out    => fila_data_out,
+            len_out     => fila_len_out,
+            dequeue_in  => dequeue,
+            enqueue_in  => enqueue,
+            data_in     => fila_data_in,
+            clk_10kHz   => clk_10khz,
+            rst         => rst
+        );
+
+    -- Fila cheia?
+    fila_full <= '1' when fila_len_out = "1000" else '0';
+
+    -- Handshake entre deserializador (produtor) e fila (consumidor)
+    process(clk_10khz)
+        variable ack_reg : std_logic := '0';
     begin
-     if(rising_edge(clk_tb)) then
--------- parte do deserializador -------------------
-       if f_len_out = "1000" then
-	  d_full <= '1';
-       else
-	  d_full <= '0';
-       end if;
+        if rising_edge(clk_10khz) then
 
-       if d_status_out = '1' then
-	  t_data_in <= bit_in;
-	  d_write_in <= '1';
-       elsif d_data_ready = '1' then
-	  temp <= d_data_out;
-    	  d_ack_in <= '1';
-       end if;
--------- parte da fila -----------------------------
+            -- Default: ack baixo
+            des_ack      <= '0';
 
-       d_write_in <= '0';
+            if enqueue = '1' and fila_full = '0' then
+                fila_data_in  <= des_data_out;
+                des_ack       <= '1';
+            end if;
 
-       if enqueue = '1' and f_len_out < "1000" then
-	  f_data_in <= temp;
-       elsif dequeue = '1' and f_len_out /= "0000" then
-	  lixo <= f_data_out;
-       end if;
------------------------------------------------------
-   end if;
-  end process;
+        end if;
+    end process;
 end architecture;
